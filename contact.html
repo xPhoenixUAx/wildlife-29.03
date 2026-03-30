@@ -29,13 +29,22 @@
           </span>
         </a>
         <nav class="desktop-nav" aria-label="Primary">
-          <a href="index.html#issue-types">Issue Types</a>
+          <div class="nav-dropdown">
+            <a class="nav-dropdown-toggle" href="index.html#issue-types">Issue Types</a>
+            <div class="nav-dropdown-menu" aria-label="Issue type services">
+              <a href="index.html#issue-types">All Issue Types</a>
+              <a href="roof-attic.html">Roof &amp; Attic Entry</a>
+              <a href="lower-structure.html">Lower Structure Shelter</a>
+              <a href="interior-utility.html">Interior &amp; Utility Routes</a>
+              <a href="yard-perimeter.html">Yard &amp; Perimeter Movement</a>
+            </div>
+          </div>
           <a href="index.html#problem-guide">Problem Guide</a>
           <a href="about.html">How It Works</a>
           <a href="contact.html">Request Assistance</a>
         </nav>
         <div class="header-actions">
-          <a class="button button-ghost" href="index.html#issue-types">View Service Options</a>
+          <a class="button button-ghost" href="index.html#issue-types">Explore Options</a>
           <button
             class="menu-toggle"
             type="button"
@@ -68,12 +77,12 @@
               <a href="cookie-policy.html" data-menu-link>Cookies</a>
             </nav>
             <div class="menu-support">
-              <p class="eyebrow">Request Help</p>
+              <p class="eyebrow">How This Works</p>
               <p>
-                Share the sounds, smells, damage, and property areas you are noticing so you can
-                review the right local options.
+                Identify the signs, compare removal and exclusion options, and request help from
+                independent local wildlife professionals.
               </p>
-              <a class="button" href="index.html#issue-types" data-menu-link>View Service Options</a>
+              <a class="button" href="contact.html" data-menu-link>Request Assistance</a>
             </div>
           </div>
         </div>
@@ -113,26 +122,26 @@
                 <li>If known, add the wildlife type, but the property clue matters more.</li>
               </ul>
             </div>
-            <form class="contact-form" data-demo-form data-reveal>
+            <form class="contact-form" data-contact-form data-reveal>
               <label>
                 Full name
-                <input type="text" name="name" placeholder="Jane Smith" />
+                <input type="text" name="name" placeholder="Jane Smith" required />
               </label>
               <label>
                 Email
-                <input type="email" name="email" placeholder="jane@example.com" />
+                <input type="email" name="email" placeholder="jane@example.com" required />
               </label>
               <label>
                 City
-                <input type="text" name="city" placeholder="Columbus" />
+                <input type="text" name="city" placeholder="Columbus" required />
               </label>
               <label>
                 State
-                <input type="text" name="state" placeholder="OH" />
+                <input type="text" name="state" placeholder="OH" required />
               </label>
               <label>
                 Wildlife category
-                <select name="category">
+                <select name="category" required>
                   <option value="">Select a category</option>
                   <option>Raccoons</option>
                   <option>Skunks</option>
@@ -150,7 +159,7 @@
               </label>
               <label>
                 Property area
-                <select name="property-area">
+                <select name="property-area" required>
                   <option value="">Select an area</option>
                   <option>Attic or roofline</option>
                   <option>Chimney or vent</option>
@@ -166,17 +175,49 @@
                   name="message"
                   rows="4"
                   placeholder="Example: Heavy sounds over a bedroom ceiling near the chimney line, dark staining around one soffit vent, and a strong odor on warm evenings."
+                  required
                 ></textarea>
               </label>
               <div class="form-actions full-span">
                 <button class="button" type="submit">Request Assistance</button>
-                <p class="form-note" data-form-note hidden>
-                  Demo form only: in a live build, this would route the inquiry to a referral workflow or CRM.
-                </p>
               </div>
             </form>
           </div>
         </section>
+
+        <div class="contact-modal" data-contact-modal aria-hidden="true">
+          <div class="contact-modal-backdrop" data-contact-modal-close></div>
+          <div
+            class="contact-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+          >
+            <button
+              class="contact-modal-close"
+              type="button"
+              data-contact-modal-close
+              aria-label="Close confirmation"
+            >
+              Close
+            </button>
+            <p class="eyebrow">Request Received</p>
+            <h2 class="display-md" id="contact-modal-title">Your request has been submitted for local review.</h2>
+            <p>
+              Thanks for sharing the details. The property area, signs reported, and wildlife
+              category can be used to review local availability and match the request with relevant
+              independent providers.
+            </p>
+            <p>
+              If service coverage aligns with your area and issue type, a local wildlife
+              professional may reach out using the contact information provided. Response timing can
+              vary by location, season, and provider coverage.
+            </p>
+            <div class="contact-modal-actions">
+              <button class="button" type="button" data-contact-modal-close>Return to site</button>
+            </div>
+          </div>
+        </div>
       </main>
 
       <footer class="site-footer">

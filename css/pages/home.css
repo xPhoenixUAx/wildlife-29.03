@@ -2,6 +2,11 @@
   padding-top: clamp(8rem, 12vw, 11rem);
 }
 
+.home-atlas,
+.pathways-section {
+  scroll-margin-top: 8.5rem;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);

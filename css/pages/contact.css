@@ -37,7 +37,7 @@
 
 .contact-hero-aside li,
 .contact-context li,
-.form-note {
+.contact-modal-dialog p {
   color: var(--color-muted);
 }
 
@@ -114,8 +114,73 @@
   padding-top: 0.1rem;
 }
 
-.form-note {
-  font-size: 0.86rem;
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 240ms ease,
+    visibility 0s linear 240ms;
+}
+
+.contact-modal.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition:
+    opacity 240ms ease,
+    visibility 0s linear 0s;
+}
+
+.contact-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(29, 38, 31, 0.34);
+  backdrop-filter: blur(8px);
+}
+
+.contact-modal-dialog {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.9rem;
+  width: min(100%, 38rem);
+  padding: clamp(1.2rem, 2vw, 1.6rem);
+  border: 1px solid rgba(31, 39, 34, 0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(247, 249, 244, 0.98), rgba(236, 241, 232, 0.96));
+  box-shadow: 0 20px 56px rgba(31, 39, 34, 0.14);
+  transform: translateY(14px);
+  transition: transform 240ms ease;
+}
+
+.contact-modal.is-open .contact-modal-dialog {
+  transform: translateY(0);
+}
+
+.contact-modal-dialog .display-md {
+  max-width: 14ch;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+}
+
+.contact-modal-close {
+  justify-self: end;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+
+.contact-modal-actions {
+  padding-top: 0.25rem;
 }
 
 @media (max-width: 980px) {

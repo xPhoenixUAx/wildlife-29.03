@@ -4,10 +4,13 @@ const menuToggle = document.querySelector("[data-menu-toggle]");
 const menuCloseButtons = document.querySelectorAll("[data-menu-close], [data-menu-link]");
 const header = document.querySelector("[data-site-header]");
 const revealItems = document.querySelectorAll("[data-reveal]");
-const demoForm = document.querySelector("[data-demo-form]");
+const contactForm = document.querySelector("[data-contact-form]");
+const contactModal = document.querySelector("[data-contact-modal]");
+const contactModalCloseButtons = document.querySelectorAll("[data-contact-modal-close]");
 const pathwaysPreviewImage = document.querySelector("[data-pathways-preview-image]");
 const pathwaysItems = document.querySelectorAll("[data-pathways-item]");
 const faqItems = document.querySelectorAll(".faq-list details");
+const hashLinks = document.querySelectorAll('a[href*="#"]');
 
 const hasLucide = Boolean(window.lucide && typeof window.lucide.createIcons === "function");
 const hasGsap = Boolean(window.gsap && window.ScrollTrigger);
@@ -29,6 +32,14 @@ const appendIcon = (element, iconName, position = "end") => {
 
 const decorateUiWithIcons = () => {
   if (!hasLucide) return;
+
+  document.querySelectorAll(".brand-mark").forEach((mark) => {
+    if (mark.querySelector("svg, [data-lucide]")) return;
+
+    mark.classList.add("has-icon");
+    mark.setAttribute("aria-hidden", "true");
+    mark.innerHTML = '<i data-lucide="paw-print"></i>';
+  });
 
   appendIcon(menuToggle, "menu");
   document.querySelectorAll("[data-menu-close]").forEach((button) => appendIcon(button, "x"));
@@ -103,6 +114,56 @@ const initMenu = () => {
     if (event.key === "Escape") {
       setMenuState(false);
     }
+  });
+};
+
+const scrollToHashTarget = (hash, shouldPushState = false) => {
+  if (!hash || hash === "#") return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  const headerOffset = header ? header.offsetHeight + 24 : 24;
+  const targetTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+  window.scrollTo({
+    top: Math.max(targetTop, 0),
+    behavior: "smooth",
+  });
+
+  if (shouldPushState) {
+    window.history.pushState(null, "", hash);
+  }
+};
+
+const initHashNavigation = () => {
+  hashLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || href === "#") return;
+
+    const url = new URL(href, window.location.href);
+    const isSamePage = url.pathname === window.location.pathname && url.hash;
+
+    if (!isSamePage) return;
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      scrollToHashTarget(url.hash, true);
+    });
+  });
+
+  if (window.location.hash) {
+    window.addEventListener(
+      "load",
+      () => {
+        window.setTimeout(() => scrollToHashTarget(window.location.hash), 60);
+      },
+      { once: true },
+    );
+  }
+
+  window.addEventListener("hashchange", () => {
+    scrollToHashTarget(window.location.hash);
   });
 };
 
@@ -202,18 +263,31 @@ const initRevealFallback = () => {
   }
 };
 
-const initFormDemo = () => {
-  if (!demoForm) return;
+const setContactModalState = (isOpen) => {
+  if (!contactModal) return;
 
-  demoForm.addEventListener("submit", (event) => {
+  contactModal.classList.toggle("is-open", isOpen);
+  contactModal.setAttribute("aria-hidden", String(!isOpen));
+  body.classList.toggle("modal-open", isOpen);
+};
+
+const initContactForm = () => {
+  if (!contactForm) return;
+
+  contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    const note = demoForm.querySelector("[data-form-note]");
+    contactForm.reset();
+    setContactModalState(true);
+  });
 
-    if (note) {
-      note.hidden = false;
+  contactModalCloseButtons.forEach((button) => {
+    button.addEventListener("click", () => setContactModalState(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && contactModal?.classList.contains("is-open")) {
+      setContactModalState(false);
     }
-
-    demoForm.reset();
   });
 };
 
@@ -297,7 +371,8 @@ const initFaqAnimation = () => {
 decorateUiWithIcons();
 initMenu();
 initHeader();
-initFormDemo();
+initHashNavigation();
+initContactForm();
 initPathwaysPreview();
 initFaqAnimation();
 
