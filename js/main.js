@@ -46,6 +46,7 @@ const decorateUiWithIcons = () => {
   appendIcon(menuToggle, "menu");
   document.querySelectorAll("[data-menu-close]").forEach((button) => appendIcon(button, "x"));
   document.querySelectorAll(".header-mobile-cta").forEach((button) => appendIcon(button, "phone"));
+  document.querySelectorAll(".header-phone").forEach((item) => appendIcon(item, "phone", "start"));
   document.querySelectorAll(".button:not(.button-text):not(.header-mobile-cta)").forEach((button) =>
     appendIcon(button, "arrow-up-right"),
   );
