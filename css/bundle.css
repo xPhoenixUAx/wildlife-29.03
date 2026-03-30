@@ -1,0 +1,346 @@
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: min(1320px, calc(100vw - 2rem));
+  margin: 1rem auto 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid transparent;
+  background: rgba(231, 237, 227, 0.54);
+  backdrop-filter: blur(18px);
+  transition:
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.site-header.is-scrolled {
+  border-color: rgba(31, 39, 34, 0.1);
+  background: rgba(243, 246, 239, 0.92);
+  box-shadow: 0 16px 40px rgba(31, 39, 34, 0.08);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(31, 39, 34, 0.15);
+  border-radius: 50%;
+  background: rgba(243, 246, 239, 0.82);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.brand-copy {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.brand-copy strong {
+  font-size: 0.95rem;
+}
+
+.brand-copy span:last-child {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.desktop-nav,
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.desktop-nav a {
+  position: relative;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+}
+
+.desktop-nav a::after,
+.footer-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.25rem;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+
+.desktop-nav a:hover::after,
+.desktop-nav a:focus-visible::after,
+.footer-links a:hover::after,
+.footer-links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.menu-toggle,
+.menu-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.94rem;
+  color: var(--color-text);
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.menu-toggle .ui-icon,
+.menu-close .ui-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-toggle .ui-icon svg,
+.menu-close .ui-icon svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 2.1;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  visibility: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at top left, rgba(86, 116, 88, 0.22), transparent 26%),
+    linear-gradient(120deg, rgba(46, 74, 52, 0.12), rgba(109, 88, 67, 0.05)),
+    rgba(231, 237, 227, 0.97);
+  transform: translateX(-100%);
+  transition:
+    transform 560ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    visibility 0s linear 560ms;
+}
+
+.menu-overlay.is-open {
+  visibility: visible;
+  transform: translateX(0);
+  transition:
+    transform 560ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    visibility 0s linear 0s;
+}
+
+.menu-inner {
+  width: min(1320px, calc(100vw - 2rem));
+  min-height: 100vh;
+  margin-inline: auto;
+  padding: 1.25rem 0 2.5rem;
+}
+
+.menu-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.2rem 0 2rem;
+  color: var(--color-muted);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: start;
+}
+
+.menu-nav {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.menu-nav a {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 6vw, 5.25rem);
+  line-height: 1;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(31, 39, 34, 0.12);
+}
+
+.menu-support {
+  display: grid;
+  gap: 1.25rem;
+  align-self: end;
+  padding: 1.5rem 0 0;
+  color: var(--color-muted);
+}
+
+.page-hero-grid,
+.legal-hero {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.page-hero-copy {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  padding-inline-end: clamp(0.5rem, 1vw, 1.5rem);
+}
+
+.site-footer {
+  border-top: 1px solid rgba(31, 39, 34, 0.1);
+  padding: 2rem 0 2.5rem;
+}
+
+.footer-grid {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.footer-brand {
+  align-items: start;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 1rem 1.5rem;
+}
+
+.footer-links a {
+  position: relative;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+}
+
+.footer-disclaimer {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(31, 39, 34, 0.1);
+}
+
+.footer-disclaimer p {
+  max-width: 110ch;
+  font-size: 0.84rem;
+  color: var(--color-muted);
+}
+
+.faq-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.faq-list details {
+  padding: 1.25rem 0;
+  border-top: 1px solid rgba(31, 39, 34, 0.14);
+}
+
+.faq-list details:last-child {
+  border-bottom: 1px solid rgba(31, 39, 34, 0.14);
+}
+
+.faq-list summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  color: var(--color-accent);
+}
+
+.faq-list details[open] summary::after {
+  content: "−";
+}
+
+.faq-list p {
+  max-width: 65ch;
+  padding-top: 0.9rem;
+  color: var(--color-muted);
+}
+
+.faq-list details {
+  overflow: hidden;
+}
+
+.faq-list summary::after {
+  transition: transform 260ms ease;
+}
+
+.faq-list details[open] summary::after {
+  content: "−";
+  transform: rotate(180deg);
+}
+
+@media (max-width: 980px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .site-header {
+    width: min(1320px, calc(100vw - 1rem));
+  }
+
+  .menu-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .footer-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    padding: 0.8rem 0.9rem;
+  }
+
+  .header-actions .button-ghost {
+    display: none;
+  }
+
+  .menu-nav a {
+    font-size: clamp(2rem, 11vw, 3.75rem);
+  }
+
+  .brand-copy span:last-child {
+    display: none;
+  }
+}

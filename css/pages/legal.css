@@ -1,0 +1,56 @@
+.legal-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.legal-layout article {
+  display: grid;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(31, 39, 34, 0.12);
+}
+
+.legal-layout article:last-child {
+  border-bottom: 1px solid rgba(31, 39, 34, 0.12);
+  padding-bottom: 1rem;
+}
+
+.legal-layout h2 {
+  font-size: 1.45rem;
+}
+
+.legal-layout h3 {
+  margin-top: 0.35rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.legal-layout p {
+  max-width: 74ch;
+  color: var(--color-muted);
+}
+
+.legal-layout ul {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 74ch;
+  margin: 0.1rem 0 0.2rem;
+}
+
+.legal-layout li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--color-muted);
+}
+
+.legal-layout li::before {
+  content: "";
+  position: absolute;
+  top: 0.72rem;
+  left: 0;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: rgba(46, 74, 52, 0.74);
+}
