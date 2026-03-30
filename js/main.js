@@ -12,6 +12,7 @@ const pathwaysItems = document.querySelectorAll("[data-pathways-item]");
 const faqItems = document.querySelectorAll(".faq-list details");
 const menuNavGroups = document.querySelectorAll(".menu-nav-group");
 const hashLinks = document.querySelectorAll('a[href*="#"]');
+const cookieConsentKey = "whc-cookie-consent";
 
 const hasLucide = Boolean(window.lucide && typeof window.lucide.createIcons === "function");
 const hasGsap = Boolean(window.gsap && window.ScrollTrigger);
@@ -453,6 +454,60 @@ const initFaqAnimation = () => {
   });
 };
 
+const initCookieBanner = () => {
+  try {
+    if (window.localStorage.getItem(cookieConsentKey)) return;
+  } catch {
+    // Ignore storage access issues and still show the banner for this session.
+  }
+
+  const banner = document.createElement("div");
+  banner.className = "cookie-banner";
+  banner.setAttribute("role", "dialog");
+  banner.setAttribute("aria-label", "Cookie notice");
+  banner.innerHTML = `
+    <div class="cookie-banner-inner">
+      <div class="cookie-banner-copy">
+        <p class="cookie-banner-title">Cookie Notice</p>
+        <p>
+          Wildlife Home Connect uses cookies and similar technologies for core site function and
+          analytics. You can accept all cookies or continue with only necessary cookies. See our
+          <a href="cookie-policy.html">Cookie Policy</a>.
+        </p>
+      </div>
+      <div class="cookie-banner-actions">
+        <button class="button button-ghost cookie-banner-button" type="button" data-cookie-choice="necessary">
+          Only Necessary
+        </button>
+        <button class="button cookie-banner-button" type="button" data-cookie-choice="accepted">
+          Accept All
+        </button>
+      </div>
+    </div>
+  `;
+
+  body.append(banner);
+
+  requestAnimationFrame(() => {
+    banner.classList.add("is-visible");
+  });
+
+  banner.querySelectorAll("[data-cookie-choice]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const value = button.getAttribute("data-cookie-choice");
+
+      try {
+        window.localStorage.setItem(cookieConsentKey, value || "accepted");
+      } catch {
+        // Ignore storage access issues and still dismiss the banner.
+      }
+
+      banner.classList.remove("is-visible");
+      window.setTimeout(() => banner.remove(), 260);
+    });
+  });
+};
+
 decorateUiWithIcons();
 initMenu();
 initMenuDropdowns();
@@ -461,6 +516,7 @@ initHashNavigation();
 initContactForm();
 initPathwaysPreview();
 initFaqAnimation();
+initCookieBanner();
 
 if (!initGsapEffects()) {
   initRevealFallback();
