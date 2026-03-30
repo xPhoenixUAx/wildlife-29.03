@@ -10,6 +10,7 @@ const contactModalCloseButtons = document.querySelectorAll("[data-contact-modal-
 const pathwaysPreviewImage = document.querySelector("[data-pathways-preview-image]");
 const pathwaysItems = document.querySelectorAll("[data-pathways-item]");
 const faqItems = document.querySelectorAll(".faq-list details");
+const menuNavGroups = document.querySelectorAll(".menu-nav-group");
 const hashLinks = document.querySelectorAll('a[href*="#"]');
 
 const hasLucide = Boolean(window.lucide && typeof window.lucide.createIcons === "function");
@@ -43,7 +44,8 @@ const decorateUiWithIcons = () => {
 
   appendIcon(menuToggle, "menu");
   document.querySelectorAll("[data-menu-close]").forEach((button) => appendIcon(button, "x"));
-  document.querySelectorAll(".button:not(.button-text)").forEach((button) =>
+  document.querySelectorAll(".header-mobile-cta").forEach((button) => appendIcon(button, "phone"));
+  document.querySelectorAll(".button:not(.button-text):not(.header-mobile-cta)").forEach((button) =>
     appendIcon(button, "arrow-up-right"),
   );
   document.querySelectorAll(".button-text").forEach((button) =>
@@ -81,6 +83,13 @@ const setMenuState = (isOpen) => {
   menuToggle.setAttribute("aria-expanded", String(isOpen));
   body.classList.toggle("menu-open", isOpen);
 
+  if (!isOpen && menuNavGroups.length) {
+    menuNavGroups.forEach((group) => {
+      group.open = false;
+      group.style.height = "";
+    });
+  }
+
   if (isOpen) {
     animateMenuEntries();
   }
@@ -114,6 +123,73 @@ const initMenu = () => {
     if (event.key === "Escape") {
       setMenuState(false);
     }
+  });
+};
+
+const initMenuDropdowns = () => {
+  if (!menuNavGroups.length) return;
+
+  const animateMenuGroup = (details, shouldOpen) => {
+    const summary = details.querySelector("summary");
+    if (!summary) return;
+
+    const startHeight = details.offsetHeight;
+
+    if (shouldOpen) {
+      details.open = true;
+    }
+
+    const endHeight = shouldOpen ? details.scrollHeight : summary.offsetHeight;
+
+    details.style.height = `${startHeight}px`;
+    details.style.overflow = "hidden";
+
+    requestAnimationFrame(() => {
+      details.style.transition = "height 280ms ease";
+      details.style.height = `${endHeight}px`;
+    });
+
+    const onTransitionEnd = (event) => {
+      if (event.propertyName !== "height") return;
+
+      details.style.transition = "";
+      details.style.height = "";
+      details.style.overflow = "";
+
+      if (!shouldOpen) {
+        details.open = false;
+      }
+
+      details.removeEventListener("transitionend", onTransitionEnd);
+    };
+
+    details.addEventListener("transitionend", onTransitionEnd);
+  };
+
+  menuNavGroups.forEach((group) => {
+    const summary = group.querySelector("summary");
+    if (!summary) return;
+
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const shouldOpen = !group.open;
+
+      menuNavGroups.forEach((entry) => {
+        if (entry !== group && entry.open) {
+          animateMenuGroup(entry, false);
+        }
+      });
+
+      animateMenuGroup(group, shouldOpen);
+    });
+
+    group.querySelectorAll("[data-menu-link]").forEach((link) => {
+      link.addEventListener("click", () => {
+        group.open = false;
+        group.style.height = "";
+      });
+    });
   });
 };
 
@@ -292,7 +368,16 @@ const initContactForm = () => {
 };
 
 const initPathwaysPreview = () => {
-  if (!pathwaysPreviewImage || !pathwaysItems.length) return;
+  if (!pathwaysItems.length) return;
+
+  pathwaysItems.forEach((item) => {
+    const previewSrc = item.getAttribute("data-preview-src");
+    if (previewSrc) {
+      item.style.setProperty("--card-image", `url("${previewSrc}")`);
+    }
+  });
+
+  if (!pathwaysPreviewImage) return;
 
   const setPreview = (item) => {
     if (!item) return;
@@ -370,6 +455,7 @@ const initFaqAnimation = () => {
 
 decorateUiWithIcons();
 initMenu();
+initMenuDropdowns();
 initHeader();
 initHashNavigation();
 initContactForm();

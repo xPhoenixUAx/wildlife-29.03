@@ -1,4 +1,6 @@
 .home-hero {
+  position: relative;
+  isolation: isolate;
   padding-top: clamp(8rem, 12vw, 11rem);
 }
 
@@ -326,6 +328,10 @@
     transform var(--transition);
 }
 
+.species-card-image {
+  display: none;
+}
+
 .species-register article:hover,
 .species-register article:focus-within {
   transform: translateX(4px);
@@ -485,6 +491,23 @@
   .hero-image {
     min-height: 28rem;
   }
+
+  .pathways-layout {
+    gap: 1.1rem;
+  }
+
+  .pathways-copy,
+  .pathways-stage,
+  .species-register {
+    grid-area: auto;
+    max-width: none;
+    padding-inline-end: 0;
+  }
+
+  .pathways-stage {
+    align-self: start;
+    justify-self: stretch;
+  }
 }
 
 @media (max-width: 900px) {
@@ -507,9 +530,74 @@
     gap: 0.65rem;
     padding-inline-start: 0;
   }
+
+  .pathways-section {
+    padding-top: 3rem;
+    padding-bottom: 3.2rem;
+  }
+
+  .pathways-copy {
+    gap: 0.65rem;
+  }
+
+  .pathways-image {
+    min-height: 14.5rem;
+  }
+
+  .pathways-note {
+    gap: 0.3rem;
+    padding-top: 0.55rem;
+  }
+
+  .species-register {
+    gap: 0.35rem;
+  }
+
+  .species-register article {
+    min-height: auto;
+    padding: 0.8rem 0 0.15rem;
+  }
+
+  .species-register h3 {
+    font-size: 1.45rem;
+  }
 }
 
 @media (max-width: 640px) {
+  .home-hero {
+    background:
+      linear-gradient(180deg, rgba(16, 23, 19, 0.52), rgba(16, 23, 19, 0.74)),
+      url("../../img/home/hero-main.jpg") center 42% / cover no-repeat;
+  }
+
+  .hero-grid {
+    gap: 1rem;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    padding: 0 0 1.1rem;
+  }
+
+  .hero-copy > :is(.display-xl, .lede),
+  .hero-copy .button-text {
+    color: rgba(243, 246, 239, 0.96);
+  }
+
+  .hero-copy .eyebrow,
+  .hero-note-label {
+    color: rgba(243, 246, 239, 0.72);
+  }
+
+  .hero-copy .eyebrow::before {
+    background: currentColor;
+  }
+
+  .hero-stage {
+    display: none;
+  }
+
   .hero-actions {
     flex-direction: column;
     align-items: flex-start;
@@ -523,5 +611,155 @@
 
   .zone-map li {
     grid-template-columns: 1fr;
+  }
+
+  .seasonal-section {
+    background:
+      linear-gradient(180deg, rgba(18, 26, 22, 0.52), rgba(18, 26, 22, 0.72)),
+      url("../../img/home/seasonal.jpg") center 44% / cover no-repeat;
+  }
+
+  .season-editorial {
+    gap: 0.9rem;
+  }
+
+  .season-editorial > .season-image {
+    display: none;
+  }
+
+  .season-copy {
+    position: relative;
+    z-index: 1;
+  }
+
+  .season-copy .compact-intro .eyebrow,
+  .season-ribbon p {
+    color: rgba(243, 246, 239, 0.78);
+  }
+
+  .season-copy .compact-intro .eyebrow::before {
+    background: currentColor;
+  }
+
+  .season-copy .display-md,
+  .season-ribbon .season-name {
+    color: rgba(243, 246, 239, 0.96);
+  }
+
+  .season-ribbon article {
+    border-top-color: rgba(243, 246, 239, 0.18);
+  }
+
+  .season-ribbon article:last-child {
+    border-bottom-color: rgba(243, 246, 239, 0.14);
+  }
+
+  .connection-section {
+    background:
+      linear-gradient(180deg, rgba(17, 25, 20, 0.54), rgba(17, 25, 20, 0.74)),
+      url("../../img/home/local.jpg") center 48% / cover no-repeat;
+  }
+
+  .connection-editorial {
+    gap: 0.9rem;
+  }
+
+  .connection-editorial > .connection-image {
+    display: none;
+  }
+
+  .connection-copy-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .connection-copy-wrap .compact-intro .eyebrow,
+  .connection-flow p {
+    color: rgba(243, 246, 239, 0.78);
+  }
+
+  .connection-copy-wrap .compact-intro .eyebrow::before {
+    background: currentColor;
+  }
+
+  .connection-copy-wrap .display-md,
+  .connection-flow span,
+  .connection-flow h3 {
+    color: rgba(243, 246, 239, 0.96);
+  }
+
+  .connection-flow div {
+    border-top-color: rgba(243, 246, 239, 0.18);
+  }
+
+  .connection-copy-wrap .button {
+    background: rgba(243, 246, 239, 0.96);
+    color: var(--color-accent);
+  }
+
+  .pathways-layout {
+    gap: 0.9rem;
+  }
+
+  .pathways-stage {
+    display: none;
+  }
+
+  .species-register {
+    gap: 0.75rem;
+  }
+
+  .species-register article {
+    position: relative;
+    overflow: hidden;
+    gap: 0.55rem;
+    padding: 1rem 1rem 0.9rem;
+    border-top: 0;
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(180deg, rgba(243, 246, 239, 0.68), rgba(243, 246, 239, 0.88));
+    box-shadow: 0 14px 34px rgba(31, 39, 34, 0.12);
+    transform: none;
+  }
+
+  .species-card-image {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .species-register article > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .species-register article.is-active {
+    border-top-color: transparent;
+  }
+
+  .species-register h3 a,
+  .species-register p {
+    color: var(--color-text);
+  }
+
+  .species-register .species-meta {
+    color: var(--color-earth);
+  }
+
+  .species-register .button-text {
+    color: var(--color-accent);
+  }
+
+  .species-register .button-text .ui-icon {
+    color: inherit;
+  }
+
+  .species-meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
   }
 }
